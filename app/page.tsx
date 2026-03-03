@@ -313,7 +313,7 @@ export default function HomePage() {
           {/* ── Mobile only: bottom pill to open sheet ── */}
           <button
             onClick={() => setSheetOpen(true)}
-            className="lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-slate-800/90 hover:bg-slate-900 text-white text-sm font-bold px-5 py-2.5 rounded-full shadow-xl backdrop-blur-sm transition-all active:scale-95"
+            className="lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-slate-800/90 hover:bg-slate-900 text-white text-sm font-bold px-5 py-2.5 rounded-full shadow-xl backdrop-blur-sm transition-all active:scale-95"
             style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.35)' }}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
