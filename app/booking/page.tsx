@@ -216,14 +216,12 @@ export default function BookingPage() {
               </div>
               <h2 className="text-sm font-bold text-slate-700">Identitas Pemohon</h2>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="col-span-2">
+            {/* Nama + HP: full width each on mobile, side-by-side on sm+ */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="sm:col-span-2">
                 <Field label="Nama PIC / Penanggung Jawab" name="nama" placeholder="Contoh: Ahmad Fauzi" required />
               </div>
               <Field label="No HP / WhatsApp" name="hp" type="tel" placeholder="0812XXXXXXXX" required />
-              <div className="col-span-1">
-                {/* Empty slot for grid balance */}
-              </div>
             </div>
             <Field label="Asal Instansi / Komunitas" name="instansi" placeholder="Contoh: Padepokan A / SMAN 1 Jakarta" required />
           </div>
@@ -238,8 +236,9 @@ export default function BookingPage() {
               </div>
               <h2 className="text-sm font-bold text-slate-700">Detail Kegiatan</h2>
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="col-span-2">
+            {/* Kegiatan + Peserta: stack on mobile, side-by-side on sm+ */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="sm:col-span-2">
                 <Field label="Nama Kegiatan" name="kegiatan" placeholder="Contoh: Latihan Silat Rutin" required />
               </div>
               <Field label="Jml Peserta" name="peserta" type="number" placeholder="0" min="1" max="500" required />
@@ -256,7 +255,8 @@ export default function BookingPage() {
               </div>
               <h2 className="text-sm font-bold text-slate-700">Waktu Peminjaman</h2>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            {/* Mulai + Selesai: stack on xs, side by side on sm+ */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Field label="Mulai" name="start" type="datetime-local" min={minDateTime} required />
               <Field label="Selesai" name="end" type="datetime-local" min={formData.start || minDateTime} required />
             </div>

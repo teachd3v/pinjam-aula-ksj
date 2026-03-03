@@ -120,34 +120,39 @@ export default function HomePage() {
 
       {/* ===== HEADER ===== */}
       <header className="bg-hero text-white shadow-lg shrink-0">
-        <div className="px-4 pt-4 pb-0 flex justify-between items-center">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg">🏮</div>
-            <div>
-              <h1 className="text-base font-black leading-tight">Peminjaman Aula KSJ</h1>
-              <p className="text-[10px] opacity-60">Kampung Silat Jampang</p>
+        <div className="px-4 pt-3 pb-0 flex justify-between items-center gap-2">
+          {/* Logo + Title */}
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-7 h-7 shrink-0 rounded-full bg-white/20 flex items-center justify-center text-base">🏮</div>
+            <div className="min-w-0">
+              <h1 className="text-sm font-black leading-tight truncate">Peminjaman Aula KSJ</h1>
+              <p className="text-[9px] opacity-60 hidden sm:block">Kampung Silat Jampang</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Admin — icon + text on sm+, icon only on xs */}
             <Link
               href="/admin/login"
-              className="btn-primary py-2 px-3 text-xs"
+              className="btn-primary py-1.5 px-2.5 text-xs"
               style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              Admin
+              <span className="hidden sm:inline">Admin</span>
             </Link>
+            {/* Booking */}
             <Link
               href="/booking"
-              className="btn-primary py-2 px-3 text-xs"
+              className="btn-primary py-1.5 px-2.5 text-xs"
               style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
-              Booking
+              <span className="hidden sm:inline">Booking</span>
             </Link>
           </div>
         </div>
@@ -182,7 +187,7 @@ export default function HomePage() {
 
         {/* LEFT PANEL – Calendar */}
         <div className="bg-white border-b lg:border-b-0 lg:border-r border-slate-200 shadow-sm lg:flex-1"
-             style={{ height: 'min(50vw, 420px)' }}
+             style={{ height: 'clamp(260px, 52vw, 420px)' }}
         >
           <div className="h-full">
             <FullCalendarComponent events={calendarEvents} />
