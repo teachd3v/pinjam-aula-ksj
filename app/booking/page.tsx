@@ -93,6 +93,47 @@ function validateForm(data: FormData): FormErrors {
   return errors;
 }
 
+interface FieldProps {
+  label: string;
+  name: string;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+  min?: string;
+  max?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+}
+
+const Field = ({
+  label, name, type = 'text', placeholder, required, min, max, value, onChange, error
+}: FieldProps) => (
+  <div>
+    <label className="form-label">
+      {label}{required && <span className="text-red-500 ml-0.5">*</span>}
+    </label>
+    <input
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      min={min}
+      max={max}
+      className={`form-input ${error ? 'error' : ''}`}
+    />
+    {error && (
+      <p className="form-error">
+        <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        {error}
+      </p>
+    )}
+  </div>
+);
+
 export default function BookingPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
@@ -149,37 +190,6 @@ export default function BookingPage() {
     }
   };
 
-  const Field = ({
-    label, name, type = 'text', placeholder, required, min, max,
-  }: {
-    label: string; name: keyof FormData; type?: string; placeholder?: string;
-    required?: boolean; min?: string; max?: string;
-  }) => (
-    <div>
-      <label className="form-label">
-        {label}{required && <span className="text-red-500 ml-0.5">*</span>}
-      </label>
-      <input
-        type={type}
-        name={name}
-        value={formData[name]}
-        onChange={handleChange}
-        placeholder={placeholder}
-        min={min}
-        max={max}
-        className={`form-input ${errors[name] ? 'error' : ''}`}
-      />
-      {errors[name] && (
-        <p className="form-error">
-          <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          {errors[name]}
-        </p>
-      )}
-    </div>
-  );
-
   // Min datetime = now (formatted for input)
   const minDateTime = new Date().toISOString().slice(0, 16);
 
@@ -219,11 +229,11 @@ export default function BookingPage() {
             {/* Nama + HP: full width each on mobile, side-by-side on sm+ */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="sm:col-span-2">
-                <Field label="Nama PIC / Penanggung Jawab" name="nama" placeholder="Contoh: Ahmad Fauzi" required />
+                <Field label="Nama PIC / Penanggung Jawab" name="nama" value={formData.nama} onChange={handleChange} error={errors.nama} placeholder="Contoh: Ahmad Fauzi" required />
               </div>
-              <Field label="No HP / WhatsApp" name="hp" type="tel" placeholder="0812XXXXXXXX" required />
+              <Field label="No HP / WhatsApp" name="hp" type="tel" value={formData.hp} onChange={handleChange} error={errors.hp} placeholder="0812XXXXXXXX" required />
             </div>
-            <Field label="Asal Instansi / Komunitas" name="instansi" placeholder="Contoh: Padepokan A / SMAN 1 Jakarta" required />
+            <Field label="Asal Instansi / Komunitas" name="instansi" value={formData.instansi} onChange={handleChange} error={errors.instansi} placeholder="Contoh: Padepokan A / SMAN 1 Jakarta" required />
           </div>
 
           {/* Section: Detail Kegiatan */}
@@ -239,9 +249,9 @@ export default function BookingPage() {
             {/* Kegiatan + Peserta: stack on mobile, side-by-side on sm+ */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="sm:col-span-2">
-                <Field label="Nama Kegiatan" name="kegiatan" placeholder="Contoh: Latihan Silat Rutin" required />
+                <Field label="Nama Kegiatan" name="kegiatan" value={formData.kegiatan} onChange={handleChange} error={errors.kegiatan} placeholder="Contoh: Latihan Silat Rutin" required />
               </div>
-              <Field label="Jml Peserta" name="peserta" type="number" placeholder="0" min="1" max="500" required />
+              <Field label="Jml Peserta" name="peserta" type="number" value={formData.peserta} onChange={handleChange} error={errors.peserta} placeholder="0" min="1" max="500" required />
             </div>
           </div>
 
@@ -257,8 +267,8 @@ export default function BookingPage() {
             </div>
             {/* Mulai + Selesai: stack on xs, side by side on sm+ */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="Mulai" name="start" type="datetime-local" min={minDateTime} required />
-              <Field label="Selesai" name="end" type="datetime-local" min={formData.start || minDateTime} required />
+              <Field label="Mulai" name="start" type="datetime-local" value={formData.start} onChange={handleChange} error={errors.start} min={minDateTime} required />
+              <Field label="Selesai" name="end" type="datetime-local" value={formData.end} onChange={handleChange} error={errors.end} min={formData.start || minDateTime} required />
             </div>
             <p className="text-xs text-slate-400 flex items-center gap-1">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
